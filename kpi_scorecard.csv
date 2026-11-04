@@ -1,0 +1,7 @@
+company,short_name,fy_label,revenue_growth,revenue_growth_status,pbt_margin,pbt_margin_status,operating_margin,operating_margin_status,current_ratio,current_ratio_status,debt_to_equity,debt_to_equity_status,interest_cover,interest_cover_status,equity_change_3y,equity_change_3y_status,kpis_scored,screening_score
+AJ Bell plc,AJ Bell,FY2025,0.1797,Green,0.4336,Green,0.4152,Green,3.6465,Green,0.0555,Green,149.0408,Green,0.6301,Green,7,1.0000
+Jupiter Fund Management plc,Jupiter,FY2025,0.1570,Green,0.2832,Green,0.2751,Green,2.4587,Green,0.0427,Green,39.7941,Green,0.0737,Green,7,1.0000
+Polar Capital Holdings plc,Polar Capital,FY2026,0.1899,Green,0.2908,Green,,No data,2.5264,Green,,No data,389.1616,Green,0.0556,Green,5,1.0000
+Ashmore Group plc,Ashmore,FY2025,-0.2360,Red,0.7521,Green,0.3961,Green,7.0067,Green,0.0058,Green,,No data,-0.1820,Red,6,0.6667
+Liontrust Asset Management plc,Liontrust,FY2026,-0.2086,Red,0.1073,Amber,0.1005,Amber,1.3433,Red,0.0254,Green,95.8224,Green,-0.5117,Red,7,0.4286
+Premier Miton Group plc,Premier Miton,FY2025,-0.0113,Red,0.0372,Red,0.0269,Red,1.2698,Red,0.0165,Green,,No data,-0.1127,Red,6,0.1667

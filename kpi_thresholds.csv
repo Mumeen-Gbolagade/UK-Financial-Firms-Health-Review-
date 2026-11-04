@@ -1,0 +1,8 @@
+kpi,label,better,green_from,amber_from,why_this_band
+revenue_growth,Revenue growth (latest year),higher,0.05,0.0,Green = growing faster than about 5% a year; red = revenue fell
+pbt_margin,Profit margin (PBT),higher,0.25,0.10,Listed UK fund managers often report margins of 20-35%; below 10% leaves little room for a weak year
+operating_margin,Operating margin,higher,0.25,0.10,Same bands as PBT margin but excludes investment income and one-offs
+current_ratio,Current ratio,higher,2.0,1.5,Below 1.5x is worth a closer look at what sits in current assets and liabilities
+debt_to_equity,Debt-to-equity,lower,0.25,0.50,Up to 0.25x is light borrowing; above 0.5x means debt is a material share of funding
+interest_cover,Interest coverage,higher,10,4,Below 4x interest starts to take a large share of earnings
+equity_change_3y,Equity change over 3 years,higher,0.0,-0.10,A fall of more than 10% means the capital base is shrinking
