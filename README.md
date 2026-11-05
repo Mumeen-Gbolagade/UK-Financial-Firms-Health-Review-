@@ -10,14 +10,14 @@ A portfolio project that follows one sector from raw filed accounts to a short b
 
 | Company | Year | Revenue growth | Profit margin | Current ratio | KPI screening score |
 |---|---|---|---|---|---|
-| AJ Bell | FY2025 | 🟢 +18.0% | 🟢 43.4% | 🟢 3.65x | **100%** (7 of 7 KPIs) |
-| Jupiter | FY2025 | 🟢 +15.7% | 🟢 28.3% | 🟢 2.46x | **100%** (7 of 7) |
-| Polar Capital | FY2026 | 🟢 +19.0% | 🟢 29.1% | 🟢 2.53x | **100%** (5 of 7) |
-| Ashmore | FY2025 | 🔴 −23.6% | 🟢 75.2% | 🟢 7.01x | **67%** (6 of 7) |
-| Liontrust | FY2026 | 🔴 −20.9% | 🟡 10.7% | 🔴 1.34x | **43%** (7 of 7) |
-| Premier Miton | FY2025 | 🔴 −1.1% | 🔴 3.7% | 🔴 1.27x | **17%** (6 of 7) |
+| AJ Bell | FY2025 | +18.0% |  43.4% |  3.65x | **100%** (7 of 7 KPIs) |
+| Jupiter | FY2025 |  +15.7% |  28.3% | 2.46x | **100%** (7 of 7) |
+| Polar Capital | FY2026 |  +19.0% |  29.1% | 2.53x | **100%** (5 of 7) |
+| Ashmore | FY2025 | −23.6% | 75.2% | 7.01x | **67%** (6 of 7) |
+| Liontrust | FY2026 | −20.9% | 10.7% | 1.34x | **43%** (7 of 7) |
+| Premier Miton | FY2025 | −1.1% | 3.7% | 1.27x | **17%** (6 of 7) |
 
-🟢 green · 🟡 amber · 🔴 red, using the bands in [data/kpi_thresholds.csv](data/kpi_thresholds.csv). The score is a screen, not a rating (see [section 9](#9-kpi-scorecard)).
+using the bands in [data/kpi_thresholds.csv](data/kpi_thresholds.csv). The score is a screen, not a rating (see [section 9](#9-kpi-scorecard)).
 
 ---
 
