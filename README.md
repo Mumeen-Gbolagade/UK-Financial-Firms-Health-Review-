@@ -2,24 +2,42 @@
 
 A portfolio project that follows one sector from raw filed accounts to a short brief for decision-makers. It covers six UK-listed asset and wealth managers and compares their growth, profitability, liquidity and borrowing over three years.
 
+**Quick links:** [Excel workbook](outputs/UK_Financial_Health_Review.xlsx) · [PDF report](report/UK_Financial_Health_Review_Report.pdf) · [KPI scorecard](outputs/kpi_scorecard.csv) · [Python code](src) · [SQL](sql/queries.sql) · [Screenshots](images)
+
 ![Dashboard](images/dashboard.png)
+
+**At a glance (latest audited year)**
+
+| Company | Year | Revenue growth | Profit margin | Current ratio | KPI screening score |
+|---|---|---|---|---|---|
+| AJ Bell | FY2025 | 🟢 +18.0% | 🟢 43.4% | 🟢 3.65x | **100%** (7 of 7 KPIs) |
+| Jupiter | FY2025 | 🟢 +15.7% | 🟢 28.3% | 🟢 2.46x | **100%** (7 of 7) |
+| Polar Capital | FY2026 | 🟢 +19.0% | 🟢 29.1% | 🟢 2.53x | **100%** (5 of 7) |
+| Ashmore | FY2025 | 🔴 −23.6% | 🟢 75.2% | 🟢 7.01x | **67%** (6 of 7) |
+| Liontrust | FY2026 | 🔴 −20.9% | 🟡 10.7% | 🔴 1.34x | **43%** (7 of 7) |
+| Premier Miton | FY2025 | 🔴 −1.1% | 🔴 3.7% | 🔴 1.27x | **17%** (6 of 7) |
+
+🟢 green · 🟡 amber · 🔴 red, using the bands in [data/kpi_thresholds.csv](data/kpi_thresholds.csv). The score is a screen, not a rating (see [section 9](#9-kpi-scorecard)).
 
 ---
 
 ## Contents
 
 1. [Objective](#1-objective)
-2. [Project files](#2-project-files)
-3. [Raw data](#3-raw-data)
-4. [Data cleaning](#4-data-cleaning)
-5. [Data exploration](#5-data-exploration)
-6. [Data quality](#6-data-quality)
-7. [Analysis](#7-analysis)
-8. [Recommendations](#8-recommendations)
-9. [Linking the findings to business strategy](#9-linking-the-findings-to-business-strategy)
-10. [Stakeholder brief](#10-stakeholder-brief)
-11. [Limitations](#11-limitations)
-12. [How to view and run the project](#12-how-to-view-and-run-the-project)
+2. [Screenshots](#2-screenshots)
+3. [Project files](#3-project-files)
+4. [Raw data](#4-raw-data)
+5. [Data cleaning](#5-data-cleaning)
+6. [Data exploration](#6-data-exploration)
+7. [Data quality](#7-data-quality)
+8. [Analysis](#8-analysis)
+9. [KPI scorecard](#9-kpi-scorecard)
+10. [Recommendations](#10-recommendations)
+11. [Linking the findings to business strategy](#11-linking-the-findings-to-business-strategy)
+12. [Stakeholder brief](#12-stakeholder-brief)
+13. [Limitations](#13-limitations)
+14. [How to view and run the project](#14-how-to-view-and-run-the-project)
+15. [Publishing this repository on GitHub](#15-publishing-this-repository-on-github)
 
 ---
 
@@ -39,38 +57,77 @@ A portfolio project that follows one sector from raw filed accounts to a short b
 
 ---
 
-## 2. Project files
+## 2. Screenshots
+
+All images are in the [images](images) folder. They are taken from the Excel workbook itself, apart from the summary dashboard, which is drawn from the same numbers.
+
+**Summary dashboard** ([images/dashboard.png](images/dashboard.png)): latest-year scorecard and three-year trends.
+
+![Summary dashboard](images/dashboard.png)
+
+**Excel: Dashboard sheet** ([images/excel_dashboard.png](images/excel_dashboard.png)): the live dashboard, with brand-coloured scorecard, trend tables and native Excel charts.
+
+![Excel Dashboard sheet](images/excel_dashboard.png)
+
+**Excel: KPI_Scorecard sheet** ([images/excel_kpi_scorecard.png](images/excel_kpi_scorecard.png)): seven KPIs with green / amber / red status and editable bands.
+
+![Excel KPI scorecard sheet](images/excel_kpi_scorecard.png)
+
+**Excel: Ratios sheet** ([images/excel_ratios.png](images/excel_ratios.png)): every ratio for every company-year, all live formulas.
+
+![Excel Ratios sheet](images/excel_ratios.png)
+
+**Excel: Project_Story sheet** ([images/excel_project_story.png](images/excel_project_story.png)): the project from objective to stakeholder brief on one page.
+
+![Excel Project Story sheet](images/excel_project_story.png)
+
+**Excel: Data_Log sheet** ([images/excel_data_log.png](images/excel_data_log.png)): missing values, unusual figures and comparability notes.
+
+![Excel Data Log sheet](images/excel_data_log.png)
+
+---
+
+## 3. Project files
 
 ```
-uk-financial-health-review/
+UK-Financial-Firms-Health-Review-/
 ├── README.md                     ← this file
 ├── data/
 │   ├── raw_financials.csv        ← figures as printed in the accounts (inputs)
 │   ├── companies.csv             ← company register and Companies House links
+│   ├── kpi_thresholds.csv        ← green / amber / red bands for each KPI
 │   └── sources.csv               ← every source document, link and access date
 ├── src/
-│   ├── analysis.py               ← import, cleaning, quality checks, ratios, SQL
+│   ├── config.py                 ← GitHub address used for links in the workbook and report
+│   ├── analysis.py               ← import, cleaning, quality checks, ratios, KPIs, SQL
 │   ├── build_workbook.py         ← builds the Excel workbook with live formulas
-│   ├── make_dashboard.py         ← draws the dashboard image
-│   └── build_report.py           ← writes the short report
+│   ├── make_dashboard.py         ← draws the summary dashboard image
+│   ├── make_screenshots.py       ← exports the Excel sheet screenshots
+│   ├── check_links.py            ← checks every link before upload
+│   └── build_report.py           ← writes the report (PDF + Word)
 ├── sql/
 │   └── queries.sql               ← SQL checks run on the SQLite database
 ├── outputs/
 │   ├── UK_Financial_Health_Review.xlsx   ← main workbook
-│   ├── ratios.csv · data_quality_log.csv · sql_results.xlsx · financials.db
+│   ├── ratios.csv · kpi_scorecard.csv · data_quality_log.csv
+│   └── sql_results.xlsx · financials.db
 ├── report/
 │   ├── UK_Financial_Health_Review_Report.docx
 │   └── UK_Financial_Health_Review_Report.pdf
-└── images/
-    └── dashboard.png
+├── images/
+│   ├── dashboard.png             ← summary dashboard
+│   └── excel_*.png               ← screenshots of the workbook sheets
+├── requirements.txt
+└── .gitignore
 ```
 
 | File | Use it for |
 |---|---|
 | [outputs/UK_Financial_Health_Review.xlsx](outputs/UK_Financial_Health_Review.xlsx) | The full analysis. Start on the **Dashboard** sheet |
-| [report/UK_Financial_Health_Review_Report.pdf](report/UK_Financial_Health_Review_Report.pdf) | The three-page written report ([editable .docx](report/UK_Financial_Health_Review_Report.docx)) |
+| [report/UK_Financial_Health_Review_Report.pdf](report/UK_Financial_Health_Review_Report.pdf) | Three-page written report, then a tools section and an appendix with all SQL and Python code ([editable .docx](report/UK_Financial_Health_Review_Report.docx)) |
 | [src/analysis.py](src/analysis.py) | Seeing exactly how the data was cleaned and the ratios calculated |
 | [sql/queries.sql](sql/queries.sql) | The SQL checks |
+| [outputs/kpi_scorecard.csv](outputs/kpi_scorecard.csv) | KPI values and green / amber / red status for each company |
 
 **The process from start to finish**
 
@@ -82,7 +139,7 @@ Companies House check  →  Raw figures typed in  →  Cleaning (£m, blanks kep
 
 ---
 
-## 3. Raw data
+## 4. Raw data
 
 **Companies selected**
 
@@ -103,7 +160,7 @@ Companies House check  →  Raw figures typed in  →  Cleaning (£m, blanks kep
 
 ---
 
-## 4. Data cleaning
+## 5. Data cleaning
 
 | Step | What was done | Why |
 |---|---|---|
@@ -118,7 +175,7 @@ In Excel, the **Clean_GBPm** sheet does all of this with formulas linked to **Ra
 
 ---
 
-## 5. Data exploration
+## 6. Data exploration
 
 Before calculating ratios, I looked at the overall shape of the data.
 
@@ -131,7 +188,7 @@ Before calculating ratios, I looked at the overall shape of the data.
 
 ---
 
-## 6. Data quality
+## 7. Data quality
 
 `src/analysis.py` checks every row and writes the results to [outputs/data_quality_log.csv](outputs/data_quality_log.csv) and to the workbook's **Data_Log** sheet.
 
@@ -142,7 +199,7 @@ Before calculating ratios, I looked at the overall shape of the data.
 | Unusual figures flagged | 8 (losses, or profit before tax very different from operating profit) |
 | Values estimated or filled in | **None** |
 | Excel vs Python cross-check | All 144 ratio cells match |
-| Excel formula errors | 0 out of 941 formulas |
+| Excel formula errors | 0 out of 1,043 formulas |
 
 **Where the gaps are**
 - **Polar Capital:** no operating profit line and no separate lease liabilities, so its operating margin and debt-to-equity are n/a.
@@ -152,7 +209,7 @@ Before calculating ratios, I looked at the overall shape of the data.
 
 ---
 
-## 7. Analysis
+## 8. Analysis
 
 **How each ratio is calculated**
 
@@ -189,7 +246,38 @@ The SQL queries in [sql/queries.sql](sql/queries.sql) confirm these patterns. Th
 
 ---
 
-## 8. Recommendations
+## 9. KPI scorecard
+
+The five ratios become seven KPIs: the five ratios themselves, plus operating margin (to separate fee profit from investment gains) and the change in equity over three years (to show whether the capital base is growing or shrinking). Each KPI gets a green, amber or red status from the bands in [data/kpi_thresholds.csv](data/kpi_thresholds.csv). In Excel these bands are yellow input cells on the **KPI_Scorecard** sheet, so you can change them and every status updates.
+
+| KPI | Better when | Green | Amber | Red |
+|---|---|---|---|---|
+| Revenue growth | higher | 5% or more | 0% to 5% | below 0% |
+| Profit margin (PBT) | higher | 25% or more | 10% to 25% | below 10% |
+| Operating margin | higher | 25% or more | 10% to 25% | below 10% |
+| Current ratio | higher | 2.0x or more | 1.5x to 2.0x | below 1.5x |
+| Debt-to-equity | lower | 0.25x or less | 0.25x to 0.5x | above 0.5x |
+| Interest coverage | higher | 10x or more | 4x to 10x | below 4x |
+| Equity change over 3 years | higher | 0% or more | −10% to 0% | below −10% |
+
+**Screening score** = points ÷ maximum possible points, with green = 2, amber = 1 and red = 0. KPIs with no data are left out rather than counted as red.
+
+| Company | Revenue growth | PBT margin | Operating margin | Current ratio | Debt / equity | Interest cover | Equity change | Score |
+|---|---|---|---|---|---|---|---|---|
+| AJ Bell | 🟢 18.0% | 🟢 43.4% | 🟢 41.5% | 🟢 3.65x | 🟢 0.06x | 🟢 149x | 🟢 +63.0% | **100%** |
+| Jupiter | 🟢 15.7% | 🟢 28.3% | 🟢 27.5% | 🟢 2.46x | 🟢 0.04x | 🟢 40x | 🟢 +7.4% | **100%** |
+| Polar Capital | 🟢 19.0% | 🟢 29.1% | ⚪ n/a | 🟢 2.53x | ⚪ n/a | 🟢 389x | 🟢 +5.6% | **100%** |
+| Ashmore | 🔴 −23.6% | 🟢 75.2% | 🟢 39.6% | 🟢 7.01x | 🟢 0.01x | ⚪ n/a | 🔴 −18.2% | **67%** |
+| Liontrust | 🔴 −20.9% | 🟡 10.7% | 🟡 10.1% | 🔴 1.34x | 🟢 0.03x | 🟢 96x | 🔴 −51.2% | **43%** |
+| Premier Miton | 🔴 −1.1% | 🔴 3.7% | 🔴 2.7% | 🔴 1.27x | 🟢 0.02x | ⚪ n/a | 🔴 −11.3% | **17%** |
+
+⚪ = no data. **How to read it:** Polar Capital's 100% rests on only five of the seven KPIs. Ashmore is green on every balance-sheet measure but red on both trend measures. Every firm is green on debt-to-equity, which shows how little borrowing there is in this sector. The bands are my own reading aids, not industry rules, and the score is a quick screen to decide where to look first. It is not a credit rating.
+
+![KPI scorecard](images/excel_kpi_scorecard.png)
+
+---
+
+## 10. Recommendations
 
 These are next steps for anyone relying on the analysis, not advice to buy, sell or lend.
 
@@ -206,11 +294,11 @@ These are next steps for anyone relying on the analysis, not advice to buy, sell
 **For the analysis itself**
 1. Add Ashmore's FY2026 figures once the full statements can be retrieved.
 2. Add Polar Capital's lease liabilities from the notes to its annual report.
-3. Re-run with the Companies House API key option (section 12) to download the filing records directly.
+3. Re-run with the Companies House API key option (section 14) to download the filing records directly.
 
 ---
 
-## 9. Linking the findings to business strategy
+## 11. Linking the findings to business strategy
 
 What each company's figures suggest it needs to manage, and what a stakeholder might ask management about:
 
@@ -227,7 +315,7 @@ What each company's figures suggest it needs to manage, and what a stakeholder m
 
 ---
 
-## 10. Stakeholder brief
+## 12. Stakeholder brief
 
 *A one-minute summary for a credit committee, investment committee or board.*
 
@@ -245,24 +333,26 @@ The full written version is in the [report](report/UK_Financial_Health_Review_Re
 
 ---
 
-## 11. Limitations
+## 13. Limitations
 
 - **Different year ends.** The companies close their years in March, June, September and December, so the latest years run from June 2025 to March 2026. Market conditions differed across these dates.
 - **Source route.** The figures come from each company's published audited statements, not from Companies House PDFs. Every figure is still traceable to a public source.
-- **Missing figures.** There are 18 blank values (see section 6), mainly for Polar Capital and Ashmore.
+- **Missing figures.** There are 18 blank values (see section 7), mainly for Polar Capital and Ashmore.
 - **Reporting differences.** The firms label their lines differently, and some prior years were re-presented. Every case is listed on the **Data_Log** sheet.
 - **Listed versus private companies.** This approach is harder for private companies. Small firms can file abridged accounts with no profit and loss account, so growth and margin cannot be calculated at all.
 - **Ratios are not a credit rating.** They leave out fund flows, management quality, regulation and anything that has happened since the accounts were published.
 
 ---
 
-## 12. How to view and run the project
+## 14. How to view and run the project
 
-**Viewing the workbook.** Open `outputs/UK_Financial_Health_Review.xlsx` in Excel, LibreOffice or Google Sheets. Column headers are frozen, so every sheet scrolls cleanly.
+**Viewing the workbook.** Open `outputs/UK_Financial_Health_Review.xlsx` in Excel, LibreOffice or Google Sheets. The first sheet, **README**, repeats this guide. Column headers are frozen, so every sheet scrolls cleanly.
 
 | Sheet | What it shows |
 |---|---|
+| README | This guide, inside the workbook |
 | Dashboard | Latest-year scorecard, three-year trend charts and key points |
+| KPI_Scorecard | Seven KPIs with green / amber / red status, editable bands and a screening score |
 | Project_Story | The whole project on one page: objective → data → cleaning → exploration → quality → analysis → recommendations → strategy → stakeholder brief |
 | Companies | Company register with Companies House links |
 | Raw_Data | Figures as printed (blue = typed-in inputs) |
@@ -278,11 +368,13 @@ If you change a blue number on **Raw_Data**, the cleaned figures, ratios and das
 **Running the analysis**
 
 ```bash
-pip install pandas openpyxl matplotlib python-docx
-python src/analysis.py        # cleaning, quality checks, ratios, SQLite + SQL
-python src/build_workbook.py  # Excel workbook
-python src/make_dashboard.py  # dashboard image
-python src/build_report.py    # report
+pip install -r requirements.txt
+python src/analysis.py          # cleaning, quality checks, ratios, KPIs, SQLite + SQL
+python src/build_workbook.py    # Excel workbook
+python src/make_dashboard.py    # summary dashboard image
+python src/make_screenshots.py  # Excel sheet screenshots (needs LibreOffice and poppler)
+python src/build_report.py      # report, Word and PDF (PDF needs LibreOffice)
+python src/check_links.py       # check every link (add --online to test web addresses)
 ```
 
 **Optional: download filing records from Companies House.** Get a free API key from the [Companies House developer hub](https://developer.company-information.service.gov.uk/), then run:
@@ -293,3 +385,34 @@ python src/analysis.py
 ```
 
 The key is read from your environment only and is never saved in the project.
+
+---
+
+## 15. Publishing this repository on GitHub
+
+This project lives at **https://github.com/Mumeen-Gbolagade/UK-Financial-Firms-Health-Review-**.
+
+**How the links work**
+- In this README, every link is a relative path such as `report/UK_Financial_Health_Review_Report.pdf`. GitHub resolves these against the repository, so **the folders must be uploaded as folders**. If the files end up loose in the top level of the repository, every link and image breaks.
+- In the Excel workbook and the report, file links point to their full GitHub address, for example `https://github.com/Mumeen-Gbolagade/UK-Financial-Firms-Health-Review-/blob/main/outputs/UK_Financial_Health_Review.xlsx`. They keep working after someone downloads a single file. To use another repository address, set `REPO_URL` (see `src/config.py`) and rebuild.
+- `python src/check_links.py` checks all of this before you upload.
+
+**Option A: upload in the browser (no Git needed)**
+1. Unzip the project on your computer.
+2. If the repository already has files loose at the top level, remove them first. The quickest way is **Settings → General → Danger Zone → Delete this repository**, then create a new, empty repository with the same name. Do not tick "Add a README", because this project already has one.
+3. On the empty repository page, click **uploading an existing file**. Open the unzipped project folder, select **everything inside it** (the six folders `data`, `images`, `outputs`, `report`, `sql` and `src`, plus `README.md`, `requirements.txt` and `.gitignore`), and drag the selection onto the page. Drag them; don't use "choose your files", because that picker drops the folders. If your computer hides `.gitignore`, you can leave it out.
+4. Check that the list on the upload page shows paths such as `images/dashboard.png` and `outputs/UK_Financial_Health_Review.xlsx`, then click **Commit changes**.
+
+**Option B: upload with Git**
+
+```bash
+git clone https://github.com/Mumeen-Gbolagade/UK-Financial-Firms-Health-Review-.git
+cd UK-Financial-Firms-Health-Review-
+git rm -r -q --ignore-unmatch .          # clear any files uploaded loose at the top level
+cp -r /path/to/unzipped/project/. .      # copy in the project folder's contents
+git add .
+git commit -m "UK Company Financial Health Review"
+git push origin main
+```
+
+**After uploading**, open the repository page. The dashboard image should appear at the top of the README, and the Screenshots section should show all six images. GitHub shows the `.xlsx`, `.docx` and `.db` files with a download button, opens the PDF report in its viewer, and displays the CSV files as tables.

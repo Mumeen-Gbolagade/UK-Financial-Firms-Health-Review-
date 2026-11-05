@@ -934,15 +934,21 @@ def bold_names(text: str) -> list[str]:
     return re.findall(r"\*\*([^*]+)\*\*", text)
 
 
+from config import github_link
+
+
 def resolve(target: str) -> str | None:
-    """Turn a README link into a link that works from outputs/ in Excel."""
+    """Turn a README link into a link that works from a downloaded workbook.
+
+    Files and folders in the project point to their page in the GitHub
+    repository, so the link still works when the workbook is downloaded on
+    its own.
+    """
     if target.startswith("http"):
         return target
     if target.startswith("#"):
         return None                       # section anchor, handled separately
-    if target.startswith("outputs/"):
-        return target.split("/", 1)[1]    # same folder as the workbook
-    return "../" + target
+    return github_link(target)
 
 
 def slug(heading: str) -> str:
